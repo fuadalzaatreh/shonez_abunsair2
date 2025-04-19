@@ -6,6 +6,7 @@ services:
     startCommand: python bot.py
     envVars:
       - key: PORT
-        value: 10000
+        value: "10000"
       - key: TOKEN
-        value: 7214689901:AAEmThpbn8OAcVqPxA2amyov1FkRVsSFfjw
+        value: 7214689901:AAHjDgUQF1KBO5UyisPmAJYRtqKB-pVAFRU
+     
