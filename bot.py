@@ -12,7 +12,6 @@ import sqlite3
 import datetime
 import pandas as pd
 import os
-import winsound
 
 # تعريف حالات المحادثة
 (
