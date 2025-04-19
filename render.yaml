@@ -8,5 +8,5 @@ services:
       - key: PORT
         value: "10000"
       - key: TOKEN
-        value:7214689901:AAHjDgUQF1KBO5UyisPmAJYRtqKB-pVAFRU
+        value: 7214689901:AAFLSygfIk531MKQasBUnakbYUinZEYDODo
      
