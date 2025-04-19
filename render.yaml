@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: my-bot
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: TOKEN
+        value: 7214689901:AAEmThpbn8OAcVqPxA2amyov1FkRVsSFfjw

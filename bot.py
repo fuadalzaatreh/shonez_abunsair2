@@ -24,7 +24,7 @@ import os
     ENTER_PRODUCT_NAME
 ) = range(7)
 
-TOKEN = "7214689901:AAEmThpbn8OAcVqPxA2amyov1FkRVsSFfjw"
+
 
 # إعداد التسجيل
 logging.basicConfig(
@@ -704,5 +704,4 @@ def main():
     print("✅ البوت يعمل! اضغط Ctrl+C لإيقافه")
     application.run_polling()
 
-if __name__ == '__main__':
-    main()
+application.run_polling(close_loop=False)    
