@@ -12,6 +12,8 @@ import sqlite3
 import datetime
 import pandas as pd
 import os
+from flask import Flask
+import threading
 
 # تعريف حالات المحادثة
 (
@@ -24,7 +26,11 @@ import os
     ENTER_PRODUCT_NAME
 ) = range(7)
 
-
+# إعداد Flask لربط المنفذ (مطلوب لـ Render)
+app = Flask(__name__)
+@app.route('/')
+def health_check():
+    return "Bot is running!", 200
 
 # إعداد التسجيل
 logging.basicConfig(
@@ -669,6 +675,10 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
     
     context.user_data.clear()
 
+def run_flask_app():
+    """تشغيل تطبيق Flask في منفذ منفصل"""
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))
+
 def main():
     """الدالة الرئيسية لتشغيل البوت"""
     if os.path.exists("inventory.db"):
@@ -676,8 +686,15 @@ def main():
     
     init_db()
     
-    application = Application.builder().token(TOKEN).build()
+    # تشغيل Flask في thread منفصل
+    flask_thread = threading.Thread(target=run_flask_app)
+    flask_thread.daemon = True
+    flask_thread.start()
     
+    # إنشاء تطبيق التليجرام
+    application = Application.builder().token(os.environ.get('TOKEN')).build()
+    
+    # إعداد معالجات المحادثة
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
         states={
@@ -701,7 +718,8 @@ def main():
     application.add_handler(conv_handler)
     application.add_error_handler(error_handler)
     
-    print("✅ البوت يعمل! اضغط Ctrl+C لإيقافه")
+    logger.info("✅ البوت يعمل!")
     application.run_polling()
 
-application.run_polling(close_loop=False)    
+if __name__ == '__main__':
+    main()
