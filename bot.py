@@ -29,6 +29,10 @@ import threading
 # إعداد Flask لربط المنفذ (مطلوب لـ Render)
 app = Flask(__name__)
 @app.route('/')
+def home():
+    return "البوت شغال على Render 🚀"
+
+@app.route('/')
 def health_check():
     return "Bot is running!", 200
 
